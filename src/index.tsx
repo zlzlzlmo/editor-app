@@ -1,12 +1,38 @@
-import { useState } from "react";
+import * as esbuild from "esbuild-wasm";
+import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
 const App = () => {
+  const ref = useRef<any>();
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
 
-  const onClick = () => {
-    console.log(input);
+  const startService = async () => {
+    ref.current = await esbuild.startService({
+      worker: true,
+      wasmURL: "/esbuild.wasm",
+    });
+  };
+
+  useEffect(() => {
+    startService();
+  }, []);
+
+  const onClick = async () => {
+    if (!ref.current) {
+      return;
+    }
+
+    try {
+      const res = await ref.current.transform(input, {
+        loader: "jsx",
+        target: "es2015",
+      });
+
+      setCode(res.code);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -16,9 +42,9 @@ const App = () => {
         onChange={(e) => setInput(e.target.value)}
       ></textarea>
       <div>
-        <button>Submit</button>
+        <button onClick={onClick}>Submit</button>
       </div>
-      <pre></pre>
+      {code && <pre>{code}</pre>}
     </div>
   );
 };
