@@ -20,8 +20,6 @@ export const fetchPlugin = (inputCode: string) => {
           };
         }
 
-        const { data, request } = await axios.get(args.path);
-
         const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
           args.path
         );
@@ -29,10 +27,22 @@ export const fetchPlugin = (inputCode: string) => {
         if (cachedResult) {
           return cachedResult;
         }
+        const { data, request } = await axios.get(args.path);
+
+        const fileType = args.path.match(/.css$/) ? "css" : "jsx";
+
+        const contents =
+          fileType === "css"
+            ? `
+        const style = document.createElement('style');
+        style.innerText = 'body {background-color : "red"}';
+        document.head.appendChild(style);
+        `
+            : data;
 
         const result: esbuild.OnLoadResult = {
           loader: "jsx",
-          contents: data,
+          contents,
           resolveDir: new URL("./", request.responseURL).pathname,
         };
 
