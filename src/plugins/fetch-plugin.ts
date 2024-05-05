@@ -24,18 +24,23 @@ export const fetchPlugin = (inputCode: string) => {
           args.path
         );
 
-        if (cachedResult) {
-          return cachedResult;
-        }
+        // if (cachedResult) {
+        //   return cachedResult;
+        // }
         const { data, request } = await axios.get(args.path);
 
         const fileType = args.path.match(/.css$/) ? "css" : "jsx";
+
+        const escaped = data
+          .replace(/\n/g, "")
+          .replace(/"/g, '\\"')
+          .replace(/'/g, "\\'");
 
         const contents =
           fileType === "css"
             ? `
         const style = document.createElement('style');
-        style.innerText = 'body {background-color : "red"}';
+        style.innerText = '${escaped}';
         document.head.appendChild(style);
         `
             : data;
