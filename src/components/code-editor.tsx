@@ -1,3 +1,4 @@
+import 'bulmaswatch/superhero/bulmaswatch.min.css';
 import MonacoEditor, { EditorDidMount } from "@monaco-editor/react";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import prettier from "prettier";
@@ -40,7 +41,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
 
   return (
     <div>
-      <button onClick={onFormatClick}>Format</button>
+      <button className="button button-format is-primary is-small" onClick={onFormatClick}>Format</button>
       <MonacoEditor
         editorDidMount={editorDidMount}
         value={initialValue}
