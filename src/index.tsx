@@ -43,6 +43,12 @@ const App = () => {
     }
   };
 
+  const html = `
+    <script>
+      ${code}
+    </script>
+  `;
+
   return (
     <div>
       <textarea
@@ -53,7 +59,7 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
       {code && <pre>{code}</pre>}
-      <iframe src="http://nothing.localhost:3000/test.html" />
+      <iframe sandbox="allow-scripts" srcDoc={html} />
     </div>
   );
 };
