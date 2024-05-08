@@ -6,6 +6,7 @@ import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 
 const App = () => {
   const ref = useRef<any>();
+  const iframe = useRef<any>();
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
 
@@ -37,16 +38,26 @@ const App = () => {
         },
       });
       console.log(res);
-      setCode(res.outputFiles[0].text);
+      // setCode(res.outputFiles[0].text);
+      iframe.current.contentWindow.postMessage(res.outputFiles[0].text, "*");
     } catch (error) {
       console.log(error);
     }
   };
 
   const html = `
-    <script>
-      ${code}
-    </script>
+  <html>
+    <head></head>
+    <body>
+      <div id="root"></div>
+      <script>
+        window.addEventListener('message',(event)=>{
+          console.log(event.data);
+        },false)
+      </script>
+    </body>
+  </html>
+  
   `;
 
   return (
@@ -59,7 +70,7 @@ const App = () => {
         <button onClick={onClick}>Submit</button>
       </div>
       {code && <pre>{code}</pre>}
-      <iframe sandbox="allow-scripts" srcDoc={html} />
+      <iframe ref={iframe} sandbox="allow-scripts" srcDoc={html} />
     </div>
   );
 };
