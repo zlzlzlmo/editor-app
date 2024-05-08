@@ -6,7 +6,7 @@ import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 
 const App = () => {
   const ref = useRef<any>();
-  const iframe = useRef<any>();
+  const iframe = useRef<HTMLIFrameElement | null>(null);
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
 
@@ -26,6 +26,9 @@ const App = () => {
       return;
     }
 
+    if (!iframe.current) return;
+    iframe.current.srcdoc = html;
+
     try {
       const res = await ref.current.build({
         entryPoints: ["index.js"],
@@ -39,7 +42,8 @@ const App = () => {
       });
       console.log(res);
       // setCode(res.outputFiles[0].text);
-      iframe.current.contentWindow.postMessage(res.outputFiles[0].text, "*");
+      if (!iframe.current) return;
+      iframe.current.contentWindow?.postMessage(res.outputFiles[0].text, "*");
     } catch (error) {
       console.log(error);
     }
