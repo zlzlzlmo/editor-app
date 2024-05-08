@@ -74,12 +74,20 @@ const App = () => {
     <div>
       <textarea
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={(e) => {
+          onClick(e.target.value);
+          setInput(e.target.value);
+        }}
       ></textarea>
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <iframe ref={iframe} sandbox="allow-scripts" srcDoc={html} />
+      <iframe
+        title="code preview"
+        ref={iframe}
+        sandbox="allow-scripts"
+        srcDoc={html}
+      />
     </div>
   );
 };
