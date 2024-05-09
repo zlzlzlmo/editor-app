@@ -1,7 +1,6 @@
 import './code-editor.css';
 import './syntax.css';
 import MonacoEditor, { EditorDidMount } from "@monaco-editor/react";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import prettier from "prettier";
 import parser from 'prettier/parser-babel'
 import { useRef } from "react";
@@ -14,7 +13,7 @@ interface CodeEditorProps {
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
-  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const editorRef = useRef<any>();
 
   const editorDidMount: EditorDidMount = (
     getValue: () => string,
