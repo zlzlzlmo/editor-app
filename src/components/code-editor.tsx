@@ -1,4 +1,5 @@
-import './code-editor.css'
+import './code-editor.css';
+import './syntax.css';
 import MonacoEditor, { EditorDidMount } from "@monaco-editor/react";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import prettier from "prettier";
@@ -76,6 +77,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
           automaticLayout: true,
         }}
       />
+      
     </div>
   );
 };
