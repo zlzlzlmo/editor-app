@@ -5,12 +5,13 @@ import { fetchPlugin } from "./plugins/fetch-plugin";
 import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 import CodeEditor from "./components/code-editor";
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
+import Preview from "./components/preview";
 
 const App = () => {
   const ref = useRef<any>();
-  const iframe = useRef<HTMLIFrameElement | null>(null);
+  
   const [input, setInput] = useState("");
-
+  const [code, setCode] = useState("")
   const startService = async () => {
     ref.current = await esbuild.startService({
       worker: true,
@@ -27,9 +28,6 @@ const App = () => {
       return;
     }
 
-    if (!iframe.current) return;
-    iframe.current.srcdoc = html;
-
     try {
       const res = await ref.current.build({
         entryPoints: ["index.js"],
@@ -41,36 +39,13 @@ const App = () => {
           global: "window",
         },
       });
-      console.log(res);
-      // setCode(res.outputFiles[0].text);
-      if (!iframe.current) return;
-      iframe.current.contentWindow?.postMessage(res.outputFiles[0].text, "*");
+      
+      setCode(res.outputFiles[0].text);
+      
     } catch (error) {
       console.log(error);
     }
   };
-
-  const html = `
-  <html>
-    <head></head>
-    <body>
-      <div id="root"></div>
-      <script>
-        window.addEventListener('message',(event)=>{
-          try {
-            eval(event.data);
-          } catch(err) {
-            console.log(err);
-            const root = document.querySelector('#root');
-            root.innerHTML = '<div style="color : red;"><h4>Runtime Error</h4>' + err + '</div>';
-            console.error(err);
-          }
-        },false)
-      </script>
-    </body>
-  </html>
-  
-  `;
 
   return (
     <div>
@@ -89,12 +64,7 @@ const App = () => {
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
-      <iframe
-        title="code preview"
-        ref={iframe}
-        sandbox="allow-scripts"
-        srcDoc={html}
-      />
+      <Preview code={code}/>
     </div>
   );
 };
