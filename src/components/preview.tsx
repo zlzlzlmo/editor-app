@@ -30,13 +30,14 @@ const html = `
 const Preview: React.FC<PreviewProps> = ({ code }) => {
     const iframe = useRef<HTMLIFrameElement | null>(null);
 
-    useEffect(()=>{
-        if (!iframe.current) return;
-        iframe.current.srcdoc = html;
-        if (!iframe.current) return;
-        iframe.current.contentWindow?.postMessage(code, "*");
+    useEffect(() => {
+      if(!iframe.current) return;
+      iframe.current.srcdoc = html;
+      setTimeout(() => {
+        if(!iframe.current) return;
+        iframe.current.contentWindow?.postMessage(code, '*');
+      }, 50);
     }, [code]);
-
     return (
       <div className='preview-wrapper'>
         <iframe
