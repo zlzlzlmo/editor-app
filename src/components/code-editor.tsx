@@ -4,6 +4,7 @@ import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import prettier from "prettier";
 import parser from 'prettier/parser-babel'
 import { useRef } from "react";
+import codeShift from 'jscodeshift';
 import Highlighter from 'monaco-jsx-highlighter';
 
 interface CodeEditorProps {
@@ -13,6 +14,7 @@ interface CodeEditorProps {
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+
   const editorDidMount: EditorDidMount = (
     getValue: () => string,
     monacoEditor
@@ -24,6 +26,18 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
     });
 
     monacoEditor.getModel()?.updateOptions({ tabSize: 2 });
+
+    const highlighter = new Highlighter(
+      // @ts-ignore
+      // 하이라이터 패키지를 사용하면 여기 패키지에 window 내 monaco 프로퍼티를 할당시켜놓음
+      window.monaco,
+      codeShift,
+      monacoEditor
+    )
+
+    // JSX 하이라이터(Highlighter 클래스)의 메서드
+    // 에디터 내용이 변경될때마다 호출되는 콜백 함수
+    highlighter.highLightOnDidChangeModelContent(() =>{}, ()=>{}, undefined, ()=>{});
   };
 
   const onFormatClick = () => {
