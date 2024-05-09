@@ -4,14 +4,14 @@ import { unpkgPathPlugin } from "../plugins/unpkg-path-plugin";
 
 let service: esbuild.Service | null = null;
 
-export default async (rawCode: string) => {
+const bundle = async (rawCode: string) => {
     if(!service) {
         service = await esbuild.startService({
             worker: true,
             wasmURL: "https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm",
           });
     }
-    
+
       try {
         const result = await service.build({
           entryPoints: ["index.js"],
@@ -29,3 +29,5 @@ export default async (rawCode: string) => {
         return null;
       }
 }
+
+export default bundle
