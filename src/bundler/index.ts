@@ -23,10 +23,20 @@ const bundle = async (rawCode: string) => {
             global: "window",
           },
         });
-        return result.outputFiles[0].text;
-      } catch (error) {
-        console.log(error);
-        return null;
+        return {
+          code : result.outputFiles[0].text,
+          err: ''
+        }
+      } catch (err) {
+        console.log(err);
+        if (err instanceof Error) {
+          return {
+            code: "",
+            err: err.message,
+          };
+        } else {
+          throw err;
+        }
       }
 }
 
