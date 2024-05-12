@@ -22,16 +22,17 @@
 
 ## 사용 패키지
 
-- @monaco-editor/react v3.7.5 ( Monaco Editor 코드 편집기 )
+- @monaco-editor/react ( Monaco Editor 코드 편집기 )
 - monaco-jsx-highlighter ( Moncaco Editor 내 JSX 문법 하이라이팅 기능을 제공, 코드 편집때 구문 강조 시 사용 )
 - @uiw/react-md-editor ( 마크다운 에디터 컴포넌트 라이브러리, 마크다운 형식으로 텍스트를 작성 할 수 있는 편집기 제공 )
-- axios v1.5.1 ( HTTP 클라이언트 라이브러리, 서버와의 요청 및 응답 )
-- bulmaswatch v0.8.1 ( CSS 테마 )
-- esbuild-wasm v0.8.27 ( esbuild WebAssembly, JS 및 TS 코드를 효율적으로 번들링 )
-- jscodeshift v0.11.0 ( 코드 변환을 위함 )
+- axios ( HTTP 클라이언트 라이브러리, 서버와의 요청 및 응답 )
+- bulmaswatch ( CSS 테마 )
+- esbuild-wasm ( esbuild WebAssembly, JS 및 TS 코드를 효율적으로 번들링 )
+- jscodeshift ( 코드 변환을 위함 )
 - localforage ( 브라우저 내 로컬 스토리지를 사용하기 위함 / indexeddb 사용 )
 - react-redux ( 전역 상태 관리를 위함 )
 - redux-thunk ( Redux 미들웨어, 비동기 작업 처리를 위해 사용 )
 - react-resizable ( 사용자가 크기를 조절 할 수 있게 해주는 Wrapper 컴포넌트 역할 )
 - react-app-rewired ( Creact React App 프로젝트의 웹팩 설정을 변경 할 수 있게 하기 위함 )
 - @fortawesome/fontawesome-free v5.15.1 ( font awesome 아이콘 )
+- prettier ( 코드 편집에디터 내 코드 정렬을 위한 기능 제공 )
