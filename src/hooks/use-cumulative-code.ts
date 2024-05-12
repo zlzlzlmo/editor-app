@@ -8,10 +8,12 @@ export const useCumulativeCode = (cellId: string) => {
     const showFunc = `
     import _React from 'react';
     import _ReactDOM from 'react-dom';
+    // 모든 브라우저 호환을 위한 es6 이전 문법 사용
     var show = (value) => {
-      const root = document.querySelector('#root');
-
+      var root = document.querySelector('#root');
+      
       if (typeof value === 'object') {
+        // 리액트 문법이라면
         if (value.$$typeof && value.props) {
           _ReactDOM.render(value, root);
         } else {
@@ -22,7 +24,7 @@ export const useCumulativeCode = (cellId: string) => {
       }
     };
   `;
-    const showFuncNoop = "const show = () => {}";
+    const showFuncNoop = "var show = () => {}";
     const cumulativeCode = [];
     for (let c of orderedCells) {
       if (c.type === "code") {
