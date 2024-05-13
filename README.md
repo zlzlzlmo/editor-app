@@ -36,3 +36,8 @@
 - react-app-rewired ( Creact React App 프로젝트의 웹팩 설정을 변경 할 수 있게 하기 위함 )
 - @fortawesome/fontawesome-free v5.15.1 ( font awesome 아이콘 )
 - prettier ( 코드 편집에디터 내 코드 정렬을 위한 기능 제공 )
+
+## 어플리케이션 화면
+
+![](https://velog.velcdn.com/images/hoon_dev/post/4207288a-e72b-4153-b0ce-9ed4e1175403/image.gif)
+![](https://velog.velcdn.com/images/hoon_dev/post/c63b186f-f847-40c6-bc8d-390778867b33/image.gif)
